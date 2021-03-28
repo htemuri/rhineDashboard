@@ -11,8 +11,10 @@ exports.default = {
         path: path_1.default.join(__dirname, './migrations'),
         pattern: /^[\w-]+\d+\.[tj]s$/,
     },
+    user: 'harris',
+    password: '50193262Kl^',
     entities: [Post_1.Post],
-    dbName: 'dashboard',
+    dbName: 'server',
     type: 'postgresql',
     debug: !constants_1.__prod__
 };
