@@ -2,6 +2,7 @@ import { __prod__ } from "./constants";
 import { Post } from "./entities/Post";
 import { MikroORM } from "@mikro-orm/core";
 import path from "path";
+import { Client } from "./entities/Client";
 
 export default {
     migrations: {
@@ -10,7 +11,7 @@ export default {
     },
     user: 'harris',
     password: '50193262Kl^',
-    entities: [Post],
+    entities: [Post, Client],
     dbName: 'server',
     type: 'postgresql',
     debug: !__prod__
