@@ -15,7 +15,9 @@ import { Logo } from "../media/Logo";
 const Index = () => (
   <Grid>
     <Container mt={70} centerContent={true}>
-      <Logo width="180px" height="{auto}" fill="black" />
+      <Link href="/">
+        <Logo id="logo" width="180px" height="{auto}" fill="black" />
+      </Link>
     </Container>
 
     <Box
@@ -34,18 +36,22 @@ const Index = () => (
       </Box>
       <Box w={560} mt={65}>
         <Flex>
-          <Button w={236} h={62} bg="#247bed">
-            Trainer
-          </Button>
+          <Link href="/trainerSignUp">
+            <Button w={236} h={62} bg="#247bed">
+              Trainer
+            </Button>
+          </Link>
           <Spacer />
-          <Button w={236} h={62} bg="#247bed">
-            Client
-          </Button>
+          <Link href="/clientSignUp">
+            <Button w={236} h={62} bg="#247bed">
+              Client
+            </Button>
+          </Link>
         </Flex>
       </Box>
       <Text mt={50}>
         Already have an account?{" "}
-        <Link href="./landing" fontWeight="bold">
+        <Link href="./login" fontWeight="bold">
           Log In
         </Link>
       </Text>
