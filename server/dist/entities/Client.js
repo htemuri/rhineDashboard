@@ -27,7 +27,7 @@ __decorate([
     type_graphql_1.Field(),
     core_1.Property({ type: "text", unique: true }),
     __metadata("design:type", String)
-], Client.prototype, "username", void 0);
+], Client.prototype, "email", void 0);
 __decorate([
     core_1.Property({ type: "text" }),
     __metadata("design:type", String)
@@ -42,11 +42,6 @@ __decorate([
     core_1.Property({ type: "text" }),
     __metadata("design:type", String)
 ], Client.prototype, "last_name", void 0);
-__decorate([
-    type_graphql_1.Field(),
-    core_1.Property({ type: "text", unique: true }),
-    __metadata("design:type", String)
-], Client.prototype, "email", void 0);
 __decorate([
     type_graphql_1.Field(),
     core_1.Property(),
