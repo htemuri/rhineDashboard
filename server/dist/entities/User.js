@@ -9,10 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Client = void 0;
+exports.User = void 0;
 const core_1 = require("@mikro-orm/core");
 const type_graphql_1 = require("type-graphql");
-let Client = class Client {
+let User = class User {
     constructor() {
         this.createdAt = new Date();
         this.updatedAt = new Date();
@@ -22,44 +22,54 @@ __decorate([
     type_graphql_1.Field(),
     core_1.PrimaryKey(),
     __metadata("design:type", Number)
-], Client.prototype, "client_id", void 0);
+], User.prototype, "id", void 0);
 __decorate([
     type_graphql_1.Field(),
     core_1.Property({ type: "text", unique: true }),
     __metadata("design:type", String)
-], Client.prototype, "email", void 0);
+], User.prototype, "email", void 0);
 __decorate([
     core_1.Property({ type: "text" }),
     __metadata("design:type", String)
-], Client.prototype, "password", void 0);
+], User.prototype, "password", void 0);
 __decorate([
     type_graphql_1.Field(),
     core_1.Property({ type: "text" }),
     __metadata("design:type", String)
-], Client.prototype, "first_name", void 0);
+], User.prototype, "first_name", void 0);
 __decorate([
     type_graphql_1.Field(),
     core_1.Property({ type: "text" }),
     __metadata("design:type", String)
-], Client.prototype, "last_name", void 0);
+], User.prototype, "last_name", void 0);
 __decorate([
     type_graphql_1.Field(),
-    core_1.Property(),
+    core_1.Property({ nullable: true }),
     __metadata("design:type", Number)
-], Client.prototype, "age", void 0);
+], User.prototype, "age", void 0);
 __decorate([
     type_graphql_1.Field(() => String),
     core_1.Property({ type: "date" }),
     __metadata("design:type", Date)
-], Client.prototype, "createdAt", void 0);
+], User.prototype, "createdAt", void 0);
 __decorate([
     type_graphql_1.Field(() => String),
     core_1.Property({ type: "date", onUpdate: () => new Date() }),
     __metadata("design:type", Date)
-], Client.prototype, "updatedAt", void 0);
-Client = __decorate([
+], User.prototype, "updatedAt", void 0);
+__decorate([
+    type_graphql_1.Field(() => Boolean),
+    core_1.Property({ type: "boolean" }),
+    __metadata("design:type", Boolean)
+], User.prototype, "isClient", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    core_1.Property({ nullable: true }),
+    __metadata("design:type", Number)
+], User.prototype, "cert_id", void 0);
+User = __decorate([
     type_graphql_1.ObjectType(),
     core_1.Entity()
-], Client);
-exports.Client = Client;
-//# sourceMappingURL=Client.js.map
+], User);
+exports.User = User;
+//# sourceMappingURL=User.js.map

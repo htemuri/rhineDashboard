@@ -24,23 +24,69 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClientResolver = void 0;
-const Client_1 = require("../entities/Client");
+exports.UserResolver = void 0;
+const User_1 = require("../entities/User");
 const type_graphql_1 = require("type-graphql");
 const argon2_1 = __importDefault(require("argon2"));
-let EmailPasswordInput = class EmailPasswordInput {
+let LoginInput = class LoginInput {
 };
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], EmailPasswordInput.prototype, "email", void 0);
+], LoginInput.prototype, "email", void 0);
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
-], EmailPasswordInput.prototype, "password", void 0);
-EmailPasswordInput = __decorate([
+], LoginInput.prototype, "password", void 0);
+LoginInput = __decorate([
     type_graphql_1.InputType()
-], EmailPasswordInput);
+], LoginInput);
+let TrainerSignUpInput = class TrainerSignUpInput {
+};
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], TrainerSignUpInput.prototype, "email", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], TrainerSignUpInput.prototype, "first_name", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], TrainerSignUpInput.prototype, "last_name", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], TrainerSignUpInput.prototype, "password", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], TrainerSignUpInput.prototype, "cert_id", void 0);
+TrainerSignUpInput = __decorate([
+    type_graphql_1.InputType()
+], TrainerSignUpInput);
+let ClientSignUpInput = class ClientSignUpInput {
+};
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], ClientSignUpInput.prototype, "email", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], ClientSignUpInput.prototype, "first_name", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], ClientSignUpInput.prototype, "last_name", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], ClientSignUpInput.prototype, "password", void 0);
+ClientSignUpInput = __decorate([
+    type_graphql_1.InputType()
+], ClientSignUpInput);
 let FieldError = class FieldError {
 };
 __decorate([
@@ -54,24 +100,24 @@ __decorate([
 FieldError = __decorate([
     type_graphql_1.ObjectType()
 ], FieldError);
-let ClientResponse = class ClientResponse {
+let UserResponse = class UserResponse {
 };
 __decorate([
     type_graphql_1.Field(() => [FieldError], { nullable: true }),
     __metadata("design:type", Array)
-], ClientResponse.prototype, "errors", void 0);
+], UserResponse.prototype, "errors", void 0);
 __decorate([
-    type_graphql_1.Field(() => Client_1.Client, { nullable: true }),
-    __metadata("design:type", Client_1.Client)
-], ClientResponse.prototype, "client", void 0);
-ClientResponse = __decorate([
+    type_graphql_1.Field(() => User_1.User, { nullable: true }),
+    __metadata("design:type", User_1.User)
+], UserResponse.prototype, "user", void 0);
+UserResponse = __decorate([
     type_graphql_1.ObjectType()
-], ClientResponse);
-let ClientResolver = class ClientResolver {
-    clients({ em }) {
-        return em.find(Client_1.Client, {});
+], UserResponse);
+let UserResolver = class UserResolver {
+    users({ em }) {
+        return em.find(User_1.User, {});
     }
-    register(options, { em }) {
+    registerTrainer(options, { em }) {
         return __awaiter(this, void 0, void 0, function* () {
             if (options.password.length <= 8) {
                 return {
@@ -84,12 +130,16 @@ let ClientResolver = class ClientResolver {
                 };
             }
             const hashedPassword = yield argon2_1.default.hash(options.password);
-            const client = em.create(Client_1.Client, {
+            const user = em.create(User_1.User, {
                 email: options.email,
+                first_name: options.first_name,
+                last_name: options.last_name,
+                cert_id: options.cert_id,
+                isClient: false,
                 password: hashedPassword,
             });
             try {
-                yield em.persistAndFlush(client);
+                yield em.persistAndFlush(user);
             }
             catch (err) {
                 if (err.code === "23505") {
@@ -104,15 +154,55 @@ let ClientResolver = class ClientResolver {
                 }
                 console.log("message", err.message);
             }
-            return { client };
+            return { user };
+        });
+    }
+    registerClient(options, { em }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (options.password.length <= 8) {
+                return {
+                    errors: [
+                        {
+                            field: "password",
+                            message: "length must be longer than 8 characters",
+                        },
+                    ],
+                };
+            }
+            const hashedPassword = yield argon2_1.default.hash(options.password);
+            const user = em.create(User_1.User, {
+                email: options.email,
+                first_name: options.first_name,
+                last_name: options.last_name,
+                isClient: true,
+                cert_id: null,
+                password: hashedPassword,
+            });
+            try {
+                yield em.persistAndFlush(user);
+            }
+            catch (err) {
+                if (err.code === "23505") {
+                    return {
+                        errors: [
+                            {
+                                field: "email",
+                                message: "That e-mail already exists",
+                            },
+                        ],
+                    };
+                }
+                console.log("message", err.message);
+            }
+            return { user };
         });
     }
     login(options, { em }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const client = yield em.findOne(Client_1.Client, {
+            const user = yield em.findOne(User_1.User, {
                 email: options.email,
             });
-            if (!client) {
+            if (!user) {
                 return {
                     errors: [
                         {
@@ -122,7 +212,7 @@ let ClientResolver = class ClientResolver {
                     ],
                 };
             }
-            const valid = yield argon2_1.default.verify(client.password, options.password);
+            const valid = yield argon2_1.default.verify(user.password, options.password);
             if (!valid) {
                 return {
                     errors: [
@@ -134,36 +224,44 @@ let ClientResolver = class ClientResolver {
                 };
             }
             return {
-                client,
+                user,
             };
         });
     }
 };
 __decorate([
-    type_graphql_1.Query(() => [Client_1.Client]),
+    type_graphql_1.Query(() => [User_1.User]),
     __param(0, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ClientResolver.prototype, "clients", null);
+], UserResolver.prototype, "users", null);
 __decorate([
-    type_graphql_1.Mutation(() => ClientResponse),
+    type_graphql_1.Mutation(() => UserResponse),
     __param(0, type_graphql_1.Arg("options")),
     __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [EmailPasswordInput, Object]),
+    __metadata("design:paramtypes", [TrainerSignUpInput, Object]),
     __metadata("design:returntype", Promise)
-], ClientResolver.prototype, "register", null);
+], UserResolver.prototype, "registerTrainer", null);
 __decorate([
-    type_graphql_1.Mutation(() => ClientResponse),
+    type_graphql_1.Mutation(() => UserResponse),
     __param(0, type_graphql_1.Arg("options")),
     __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [EmailPasswordInput, Object]),
+    __metadata("design:paramtypes", [ClientSignUpInput, Object]),
     __metadata("design:returntype", Promise)
-], ClientResolver.prototype, "login", null);
-ClientResolver = __decorate([
-    type_graphql_1.Resolver(Client_1.Client)
-], ClientResolver);
-exports.ClientResolver = ClientResolver;
-//# sourceMappingURL=client.js.map
+], UserResolver.prototype, "registerClient", null);
+__decorate([
+    type_graphql_1.Mutation(() => UserResponse),
+    __param(0, type_graphql_1.Arg("options")),
+    __param(1, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [LoginInput, Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "login", null);
+UserResolver = __decorate([
+    type_graphql_1.Resolver(User_1.User)
+], UserResolver);
+exports.UserResolver = UserResolver;
+//# sourceMappingURL=user.js.map

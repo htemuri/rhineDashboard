@@ -9,13 +9,16 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import React from "react";
+import { useMutation } from "urql";
 import { InputField } from "../components/InputField";
 import { Wrapper } from "../components/Wrapper";
+import { useRegisterTrainerMutation } from "../generated/graphql";
 import { Logo } from "../media/Logo";
 
 interface trainerSignUpProps {}
 
 export const TrainerSignUp: React.FC<trainerSignUpProps> = ({}) => {
+  const [, register] = useRegisterTrainerMutation();
   return (
     <Grid>
       <Container mt={70} centerContent={true}>
@@ -44,9 +47,15 @@ export const TrainerSignUp: React.FC<trainerSignUpProps> = ({}) => {
         <Wrapper>
           <Text mt={8}>E-mail</Text>
           <Formik
-            initialValues={{ username: "", password: "" }}
-            onSubmit={(values) => {
-              console.log(values);
+            initialValues={{
+              email: "",
+              first_name: "",
+              last_name: "",
+              password: "",
+              cert_id: ""
+            }}
+            onSubmit={async (values) => {
+              const response = await register(values);
             }}
           >
             {({ isSubmitting }) => (
@@ -82,8 +91,8 @@ export const TrainerSignUp: React.FC<trainerSignUpProps> = ({}) => {
                 />
                 <Text mt={"15px"}>NASM Certificate ID</Text>
                 <InputField
-                  name="nasm_id"
-                  label="nasm_id"
+                  name="cert_id"
+                  label="cert_id"
                   placeholder="Certificate ID"
                 />
                 <Button
