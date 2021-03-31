@@ -174,7 +174,7 @@ let UserResolver = class UserResolver {
             return { user };
         });
     }
-    registerClient(options, { em }) {
+    registerClient(options, { em, req }) {
         return __awaiter(this, void 0, void 0, function* () {
             if (options.password.length <= 8) {
                 return {
@@ -211,6 +211,7 @@ let UserResolver = class UserResolver {
                 }
                 console.log("message", err.message);
             }
+            req.session.userId = user.id;
             return { user };
         });
     }

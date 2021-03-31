@@ -107,6 +107,28 @@ export type LoginMutation = (
   ) }
 );
 
+export type RegisterClientMutationVariables = Exact<{
+  email: Scalars['String'];
+  first_name: Scalars['String'];
+  last_name: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type RegisterClientMutation = (
+  { __typename?: 'Mutation' }
+  & { registerClient: (
+    { __typename?: 'UserResponse' }
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & Pick<FieldError, 'field' | 'message'>
+    )>>, user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email'>
+    )> }
+  ) }
+);
+
 export type RegisterTrainerMutationVariables = Exact<{
   email: Scalars['String'];
   first_name: Scalars['String'];
@@ -130,6 +152,17 @@ export type RegisterTrainerMutation = (
   ) }
 );
 
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'first_name'>
+  )> }
+);
+
 
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
@@ -148,6 +181,26 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const RegisterClientDocument = gql`
+    mutation RegisterClient($email: String!, $first_name: String!, $last_name: String!, $password: String!) {
+  registerClient(
+    options: {email: $email, first_name: $first_name, last_name: $last_name, password: $password}
+  ) {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      email
+    }
+  }
+}
+    `;
+
+export function useRegisterClientMutation() {
+  return Urql.useMutation<RegisterClientMutation, RegisterClientMutationVariables>(RegisterClientDocument);
 };
 export const RegisterTrainerDocument = gql`
     mutation RegisterTrainer($email: String!, $first_name: String!, $last_name: String!, $cert_id: String!, $password: String!) {
@@ -168,4 +221,17 @@ export const RegisterTrainerDocument = gql`
 
 export function useRegisterTrainerMutation() {
   return Urql.useMutation<RegisterTrainerMutation, RegisterTrainerMutationVariables>(RegisterTrainerDocument);
+};
+export const MeDocument = gql`
+    query Me {
+  me {
+    id
+    email
+    first_name
+  }
+}
+    `;
+
+export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 };

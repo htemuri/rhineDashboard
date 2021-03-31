@@ -1,62 +1,11 @@
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  Heading,
-  Link,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
 import React from "react";
-import { Logo } from "../media/Logo";
+import { CenterBoxLogo } from "../components/CenterBoxLogo";
+import { WelcomeWrapper } from "../components/WelcomeWrapper";
 
 const Index = () => (
-  <Grid>
-    <Container mt={70} centerContent={true}>
-      <Link href="/">
-        <Logo id="logo" width="180px" height="{auto}" fill="black" />
-      </Link>
-    </Container>
-
-    <Box
-      mt={230}
-      bg="#070707"
-      pt="65px"
-      pb="65px"
-      pl="75px"
-      pr="75px"
-      maxW="fit-content"
-      mx="auto"
-      rounded={50}
-    >
-      <Box textAlign="center">
-        <Heading fontSize="48px">Sign up as a</Heading>
-      </Box>
-      <Box w={560} mt={65}>
-        <Flex>
-          <Link href="/trainerSignUp">
-            <Button w={236} h={62} bg="#247bed" _hover={{ bg: "#004fb8" }}>
-              Trainer
-            </Button>
-          </Link>
-          <Spacer />
-          <Link href="/clientSignUp">
-            <Button w={236} h={62} bg="#247bed" _hover={{ bg: "#004fb8" }}>
-              Client
-            </Button>
-          </Link>
-        </Flex>
-      </Box>
-      <Text mt={50}>
-        Already have an account?{" "}
-        <Link href="./login" fontWeight="bold">
-          Log In
-        </Link>
-      </Text>
-    </Box>
-  </Grid>
+  <CenterBoxLogo>
+    <WelcomeWrapper />
+  </CenterBoxLogo>
 );
 
 export default Index;

@@ -139,7 +139,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async registerClient(
     @Arg("options") options: ClientSignUpInput,
-    @Ctx() { em }: MyContext
+    @Ctx() { em, req }: MyContext
   ) {
     if (options.password.length <= 8) {
       return {
@@ -178,6 +178,9 @@ export class UserResolver {
       }
       console.log("message", err.message);
     }
+
+    req.session.userId = user.id;
+
     return { user };
   }
 

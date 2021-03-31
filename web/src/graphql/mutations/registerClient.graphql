@@ -1,0 +1,24 @@
+mutation RegisterClient(
+  $email: String!
+  $first_name: String!
+  $last_name: String!
+  $password: String!
+) {
+  registerClient(
+    options: {
+      email: $email
+      first_name: $first_name
+      last_name: $last_name
+      password: $password
+    }
+  ) {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      email
+    }
+  }
+}
