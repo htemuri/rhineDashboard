@@ -37,13 +37,13 @@ const Index = () => (
       <Box w={560} mt={65}>
         <Flex>
           <Link href="/trainerSignUp">
-            <Button w={236} h={62} bg="#247bed">
+            <Button w={236} h={62} bg="#247bed" _hover={{ bg: "#004fb8" }}>
               Trainer
             </Button>
           </Link>
           <Spacer />
           <Link href="/clientSignUp">
-            <Button w={236} h={62} bg="#247bed">
+            <Button w={236} h={62} bg="#247bed" _hover={{ bg: "#004fb8" }}>
               Client
             </Button>
           </Link>

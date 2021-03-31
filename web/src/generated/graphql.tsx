@@ -56,6 +56,7 @@ export type MutationLoginArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  me?: Maybe<User>;
   users: Array<User>;
 };
 
@@ -86,6 +87,26 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type LoginMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login: (
+    { __typename?: 'UserResponse' }
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & Pick<FieldError, 'field' | 'message'>
+    )>>, user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email'>
+    )> }
+  ) }
+);
+
 export type RegisterTrainerMutationVariables = Exact<{
   email: Scalars['String'];
   first_name: Scalars['String'];
@@ -110,6 +131,24 @@ export type RegisterTrainerMutation = (
 );
 
 
+export const LoginDocument = gql`
+    mutation Login($email: String!, $password: String!) {
+  login(options: {email: $email, password: $password}) {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      email
+    }
+  }
+}
+    `;
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
 export const RegisterTrainerDocument = gql`
     mutation RegisterTrainer($email: String!, $first_name: String!, $last_name: String!, $cert_id: String!, $password: String!) {
   registerTrainer(

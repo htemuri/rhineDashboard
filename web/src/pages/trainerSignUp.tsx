@@ -14,10 +14,13 @@ import { InputField } from "../components/InputField";
 import { Wrapper } from "../components/Wrapper";
 import { useRegisterTrainerMutation } from "../generated/graphql";
 import { Logo } from "../media/Logo";
+import { toErrorMap } from "../utils/toErrorMap";
+import { useRouter } from "next/router";
 
-interface trainerSignUpProps {}
+interface trainerSignUpProps { }
 
-export const TrainerSignUp: React.FC<trainerSignUpProps> = ({}) => {
+export const TrainerSignUp: React.FC<trainerSignUpProps> = ({ }) => {
+  const router = useRouter();
   const [, register] = useRegisterTrainerMutation();
   return (
     <Grid>
@@ -52,11 +55,21 @@ export const TrainerSignUp: React.FC<trainerSignUpProps> = ({}) => {
               first_name: "",
               last_name: "",
               password: "",
-              cert_id: ""
+              cert_id: "",
             }}
-            onSubmit={async (values) => {
+            onSubmit={async (values, { setErrors }) => {
               const response = await register(values);
-            }}
+              if (response.data ?.registerTrainer.errors)
+                setErrors(
+                  toErrorMap(response.data.registerTrainer.errors)
+                ); else if (response.data ?.registerTrainer.user) {
+                  // worked
+                  {/* console.log(values); */ }
+
+                  router.push("/dashboard");
+                }
+            }
+            }
           >
             {({ isSubmitting }) => (
               <Form>
@@ -101,6 +114,7 @@ export const TrainerSignUp: React.FC<trainerSignUpProps> = ({}) => {
                   type="submit"
                   isLoading={isSubmitting}
                   bg="#247bed"
+                  _hover={{ bg: "#004fb8" }}
                 >
                   Sign Up
                 </Button>

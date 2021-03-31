@@ -13,9 +13,9 @@ import { InputField } from "../components/InputField";
 import { Wrapper } from "../components/Wrapper";
 import { Logo } from "../media/Logo";
 
-interface clientSignUpProps {}
+interface clientSignUpProps { }
 
-export const ClientSignUp: React.FC<clientSignUpProps> = ({}) => {
+export const ClientSignUp: React.FC<clientSignUpProps> = ({ }) => {
   return (
     <Grid>
       <Container mt={70} centerContent={true}>
@@ -47,6 +47,7 @@ export const ClientSignUp: React.FC<clientSignUpProps> = ({}) => {
             initialValues={{ username: "", password: "" }}
             onSubmit={(values) => {
               console.log(values);
+
             }}
           >
             {({ isSubmitting }) => (

@@ -114,10 +114,19 @@ UserResponse = __decorate([
     type_graphql_1.ObjectType()
 ], UserResponse);
 let UserResolver = class UserResolver {
+    me({ em, req }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!req.session.userId) {
+                return null;
+            }
+            const user = yield em.findOne(User_1.User, { id: req.session.userId });
+            return user;
+        });
+    }
     users({ em }) {
         return em.find(User_1.User, {});
     }
-    registerTrainer(options, { em }) {
+    registerTrainer(options, { em, req }) {
         return __awaiter(this, void 0, void 0, function* () {
             if (options.password.length <= 8) {
                 return {
@@ -130,16 +139,23 @@ let UserResolver = class UserResolver {
                 };
             }
             const hashedPassword = yield argon2_1.default.hash(options.password);
-            const user = em.create(User_1.User, {
-                email: options.email,
-                first_name: options.first_name,
-                last_name: options.last_name,
-                cert_id: options.cert_id,
-                isClient: false,
-                password: hashedPassword,
-            });
+            let user;
             try {
-                yield em.persistAndFlush(user);
+                const result = yield em
+                    .createQueryBuilder(User_1.User)
+                    .getKnexQuery()
+                    .insert({
+                    email: options.email,
+                    first_name: options.first_name,
+                    last_name: options.last_name,
+                    cert_id: options.cert_id,
+                    is_client: false,
+                    password: hashedPassword,
+                    created_at: new Date(),
+                    updated_at: new Date(),
+                })
+                    .returning("*");
+                user = result[0];
             }
             catch (err) {
                 if (err.code === "23505") {
@@ -154,6 +170,7 @@ let UserResolver = class UserResolver {
                 }
                 console.log("message", err.message);
             }
+            req.session.userId = user.id;
             return { user };
         });
     }
@@ -197,7 +214,7 @@ let UserResolver = class UserResolver {
             return { user };
         });
     }
-    login(options, { em }) {
+    login(options, { em, req }) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield em.findOne(User_1.User, {
                 email: options.email,
@@ -223,12 +240,20 @@ let UserResolver = class UserResolver {
                     ],
                 };
             }
+            req.session.userId = user.id;
             return {
                 user,
             };
         });
     }
 };
+__decorate([
+    type_graphql_1.Query(() => User_1.User, { nullable: true }),
+    __param(0, type_graphql_1.Ctx()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "me", null);
 __decorate([
     type_graphql_1.Query(() => [User_1.User]),
     __param(0, type_graphql_1.Ctx()),
