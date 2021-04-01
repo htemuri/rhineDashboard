@@ -13,7 +13,7 @@ export const Logo: React.FC<LogoProps> = ({}) => {
       fill="#fff"
       xmlns="http://www.w3.org/2000/svg"
       width="180"
-      height="{auto}"
+      height="100%"
       viewBox="0 0 339.624 53.732"
     >
       <g

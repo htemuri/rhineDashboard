@@ -3,10 +3,10 @@ import { Formik, Form } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
 import { InputField } from "../components/InputField";
-import { Wrapper } from "../components/Wrapper";
 import { useRegisterClientMutation } from "../generated/graphql";
 import { toErrorMap } from "../utils/toErrorMap";
 import { CenterBoxLogo } from "../components/CenterBoxLogo";
+import { Wrapper } from "../components/Wrapper";
 
 interface clientSignUpProps {}
 
