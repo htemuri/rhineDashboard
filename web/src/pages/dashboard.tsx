@@ -1,9 +1,19 @@
-import { Box, Button, Heading, Link, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Link,
+  Spacer,
+  Text,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { CenterBoxLogo } from "../components/CenterBoxLogo";
 import { useMeQuery } from "../generated/graphql";
 import NextLink from "next/link";
+import { NavBar } from "../components/NavBar";
 
 interface dashboardProps {}
 
@@ -39,9 +49,20 @@ export const dashboard: React.FC<dashboardProps> = ({}) => {
     );
   } else {
     body = (
-      <Box>
-        <Text>Welcome to the Dashboard, {data.me.first_name}</Text>
-      </Box>
+      <>
+        <NavBar />
+        {/* <Box w="1024px" mx="auto">
+          <Flex>
+            <Box w="265px" bg="#070707" rounded={5}>
+              <Text>Hello</Text>
+            </Box>
+            <Spacer />
+            <Box w="690px" bg="#070707" rounded={5}>
+              <Text>Hello</Text>
+            </Box>
+          </Flex>
+        </Box> */}
+      </>
     );
   }
   return <>{body}</>;

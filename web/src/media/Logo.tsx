@@ -7,12 +7,12 @@ interface LogoProps {
   fill: string;
 }
 
-export const Logo: React.FC<LogoProps> = ({}) => {
+export const Logo: React.FC<LogoProps> = ({ width }) => {
   return (
     <svg
       fill="#fff"
       xmlns="http://www.w3.org/2000/svg"
-      width="180"
+      width={width}
       height="100%"
       viewBox="0 0 339.624 53.732"
     >
