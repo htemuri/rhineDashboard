@@ -2,7 +2,6 @@ import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
 import { Provider, createClient, dedupExchange, fetchExchange } from "urql";
 import { cacheExchange, Cache, QueryInput } from "@urql/exchange-graphcache";
 import theme from "../theme";
-import "../stylesheets/navbar.css";
 import {
   LoginMutation,
   LogoutMutation,

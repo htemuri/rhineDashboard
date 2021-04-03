@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   Flex,
   Heading,
   Link,
@@ -14,6 +15,10 @@ import { CenterBoxLogo } from "../components/CenterBoxLogo";
 import { useMeQuery } from "../generated/graphql";
 import NextLink from "next/link";
 import { NavBar } from "../components/NavBar";
+import { SideBar } from "../components/sidebar/SideBar";
+import { NameCell } from "../components/sidebar/NameCell";
+import { TodayProgram } from "../components/sidebar/TodayProgram";
+import { ActivityFeed } from "../components/sidebar/ActivityFeed";
 
 interface dashboardProps {}
 
@@ -51,17 +56,21 @@ export const dashboard: React.FC<dashboardProps> = ({}) => {
     body = (
       <>
         <NavBar />
-        {/* <Box w="1024px" mx="auto">
+        <Box w="1024px" mx="auto" mt={5}>
           <Flex>
-            <Box w="265px" bg="#070707" rounded={5}>
-              <Text>Hello</Text>
-            </Box>
+            <SideBar>
+              <NameCell />
+              <Divider mx={5} w="auto" />
+              <TodayProgram />
+              <Divider mx={5} w="auto" />
+              <ActivityFeed />
+            </SideBar>
             <Spacer />
             <Box w="690px" bg="#070707" rounded={5}>
               <Text>Hello</Text>
             </Box>
           </Flex>
-        </Box> */}
+        </Box>
       </>
     );
   }

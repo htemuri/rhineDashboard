@@ -44,6 +44,15 @@ const theme = extendTheme({
       viewBox: "0 0 3000 3163",
     },
   },
+  components: {
+    Divider: {
+      variants: {
+        colorScheme: {
+          color: "#fcba03",
+        },
+      },
+    },
+  },
 });
 
 export default theme;

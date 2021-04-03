@@ -1,8 +1,17 @@
 import { Container, Flex, Spacer } from "@chakra-ui/layout";
-import { Box, extendTheme, Input, Link, Text } from "@chakra-ui/react";
+import {
+  Box,
+  extendTheme,
+  Input,
+  Link,
+  Text,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
 import React from "react";
 import { Logo } from "../media/Logo";
 import NextLink from "next/link";
+import { SearchIcon } from "@chakra-ui/icons";
 
 interface NavBarProps {}
 
@@ -29,13 +38,20 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
 
       {/* Search Bar */}
       <Box flexBasis="480px" minW="160px">
-        <Input
-          size="sm"
-          name="search"
-          placeholder="Search"
-          borderColor="gray"
-          ml={0}
-        ></Input>
+        <InputGroup alignItems="center">
+          <InputLeftElement
+            height="full"
+            pointerEvents="none"
+            children={<SearchIcon color="gray.300" />}
+          />
+          <Input
+            size="sm"
+            name="search"
+            placeholder="Search"
+            borderColor="gray"
+            // ml={0}
+          ></Input>{" "}
+        </InputGroup>
       </Box>
 
       {/* Links on right */}
