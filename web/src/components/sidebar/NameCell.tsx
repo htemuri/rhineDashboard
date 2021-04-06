@@ -1,5 +1,4 @@
 import {
-  HamburgerIcon,
   AddIcon,
   ExternalLinkIcon,
   RepeatIcon,

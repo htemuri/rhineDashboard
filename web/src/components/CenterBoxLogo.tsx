@@ -9,7 +9,7 @@ export const CenterBoxLogo: React.FC<CenterBoxLogoProps> = ({ children }) => {
     <Grid>
       <Container mt={70} centerContent={true}>
         <Link href="/">
-          <Logo id="logo" width="180px" height="100%" fill="black" />
+          <Logo id="logo" width="180px" height="100%" fill="#fff" />
         </Link>
       </Container>
 

@@ -3,7 +3,7 @@ import React from "react";
 
 interface ActivityFeedProps {}
 
-export const ActivityFeed: React.FC<ActivityFeedProps> = ({}) => {
+export const ActivityFeed: React.FC<ActivityFeedProps> = ({ children }) => {
   return (
     <Box py={8} px={30}>
       <Box>
@@ -12,7 +12,20 @@ export const ActivityFeed: React.FC<ActivityFeedProps> = ({}) => {
           Feed
         </Text>
       </Box>
-      <Container w="270px" h="200px" py={8} borderColor="red"></Container>
+      <Box
+        w="full"
+        mt={3}
+        h="200px"
+        borderColor="#454545"
+        borderWidth={1}
+        bg="#000000"
+        rounded={5}
+        display="table"
+      >
+        <Box display="table-cell" verticalAlign="middle" textAlign="center">
+          {children}
+        </Box>
+      </Box>
     </Box>
   );
 };
