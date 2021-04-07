@@ -24,6 +24,7 @@ import { NameCell } from "../components/sidebar/NameCell";
 import { TodayProgram } from "../components/sidebar/TodayProgram";
 import { ActivityFeed } from "../components/sidebar/ActivityFeed";
 import { StatCard } from "../components/StatCard";
+import { Chart } from "../components/Chart";
 
 interface dashboardProps {}
 
@@ -129,7 +130,12 @@ export const dashboard: React.FC<dashboardProps> = ({}) => {
                   </SimpleGrid>
                 </Box>
               </Box>
-              <Box>{/* <Chart /> */}</Box>
+              <Box>
+                <Chart />
+              </Box>
+              <Box>
+                <Text>Hello</Text>
+              </Box>
             </Box>
           </Flex>
         </Box>

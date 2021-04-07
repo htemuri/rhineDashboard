@@ -33,7 +33,9 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         mr={{ base: "5", xl: "0" }}
         ml={{ base: "5", xl: "0" }}
       >
-        <Logo id="logo" width="100px" height="100%" fill="black" />
+        <Link href="/">
+          <Logo id="logo" width="100px" height="100%" fill="black" />
+        </Link>
       </Box>
 
       {/* Search Bar */}
@@ -63,32 +65,32 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         ml={{ base: "auto", xl: "0" }}
       >
         <Flex alignItems="center" height="100%">
-          <NextLink href="/">
+          <NextLink href="/dashboard">
             <Link ml={2} mr={6} fontWeight="bold" fontSize="xs">
               <Text>Home</Text>
             </Link>
           </NextLink>
-          <NextLink href="/dashboard">
+          <NextLink href="/programs">
             <Link mr={6} fontWeight="bold" fontSize="xs">
               <Text>Programs</Text>
             </Link>
           </NextLink>
-          <NextLink href="/dashboard">
+          <NextLink href="/tracker">
             <Link mr={6} fontWeight="bold" fontSize="xs">
               <Text>Tracker</Text>
             </Link>
           </NextLink>
-          <NextLink href="/dashboard">
+          <NextLink href="/nutrition">
             <Link mr={6} fontWeight="bold" fontSize="xs">
               <Text>Nutrition</Text>
             </Link>
           </NextLink>
-          <NextLink href="/dashboard">
+          <NextLink href="/calendar">
             <Link mr={6} fontWeight="bold" fontSize="xs">
               <Text>Calendar</Text>
             </Link>
           </NextLink>
-          <NextLink href="/dashboard">
+          <NextLink href="/inbox">
             <Link fontWeight="bold" fontSize="xs">
               <Text>Inbox</Text>
             </Link>
